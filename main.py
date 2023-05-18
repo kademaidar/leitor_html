@@ -53,8 +53,8 @@ def converte_formatos(df_entrada):
     df_temporario['Base Cálc. ICMS'] = df_temporario['Base Cálc. ICMS'].str.replace('.', '').str.replace(',', '.').astype(float)
     df_temporario['Valor ICMS'] = df_temporario['Valor ICMS'].str.replace('.', '').str.replace(',', '.').astype(float)
 
-
     return df_temporario
+
 
 #### Codigo comeca a rodar aqui
 
@@ -64,7 +64,7 @@ uploaded_htmls = st.file_uploader("Escolha arquivos HTML",
 
 
 if len(uploaded_htmls) == 0:
-    st.write("Zero arquivos selecionados")
+    st.write("Nenhum arquivo selecionado")
 else:
 
     nome_arquivos = []
@@ -83,14 +83,14 @@ else:
 
     df_saida = pd.concat(lista_dfs)
 
-    output = io.BytesIO()
-    df_saida.to_excel(output, index=False, sheet_name='Tabela')
-    output.seek(0)
+    excel_saida = io.BytesIO()
+    df_saida.to_excel(excel_saida, index=False, sheet_name='Tabela')
+    excel_saida.seek(0)
 
     st.write('Você colocou ' + str(len(uploaded_htmls)) + ' arquivos.')
     st.write("Nome dos arquivos: " + str(nome_arquivos))
 
     st.download_button('Baixar Excel',
-                       data=output,
+                       data=excel_saida,
                        file_name='tabela_extraida.xlsx')
     
