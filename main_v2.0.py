@@ -121,21 +121,28 @@ else:
     df_saida = pd.concat(lista_dfs)
 
 
-    if len(df_saida.columns) > 13:
+    if len(df_saida.columns) == 12:
+        tipo_tabela = 'CTe'
+    elif len(df_saida.columns) == 13:
+        tipo_tabela = 'NFe'
+    elif len(df_saida.columns) > 13:
         st.warning('Cuidado: Há mais de um tipo de arquivo!')
-
+        tipo_tabela = 'CTe_e_NFe'
+    
 
     excel_saida = io.BytesIO()
     df_saida.to_excel(excel_saida, index=False, sheet_name='Tabela')
     excel_saida.seek(0)
 
     
-    st.write('Você colocou ' + str(len(uploaded_htmls)) + ' arquivos.')
+    st.write('Você colocou ' + str(len(uploaded_htmls)) + ' arquivos do tipo ' + tipo_tabela)
     st.write("Nome dos arquivos: " + str(nome_arquivos))
     st.write("Número total de linhas: " + str(len(df_saida)))
 
 
+    nome_excel = 'tabela_' + tipo_tabela + '.xlsx'
+
     st.download_button('Baixar Excel',
                     data=excel_saida,
-                    file_name='tabela_extraida.xlsx')
+                    file_name=nome_excel)
     
