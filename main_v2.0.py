@@ -95,8 +95,8 @@ def converte_formatos(df_entrada):
         }
 
         df_CTe = df_entrada.astype(formatos_dados_CTe)
-        df_CTe['Data de Emissão'] = pd.to_datetime(df_CTe['Data de Emissão'], dayfirst=True)
-        df_CTe['Data de Autorização'] = pd.to_datetime(df_CTe['Data de Autorização'], dayfirst=True)
+        df_CTe['Data de Emissão'] = pd.to_datetime(df_CTe['Data de Emissão'], dayfirst=True).dt.date
+        df_CTe['Data de Autorização'] = pd.to_datetime(df_CTe['Data de Autorização'], dayfirst=True).dt.date
         df_CTe['Valor Total da Prestação do Serviço'] = df_CTe['Valor Total da Prestação do Serviço'].str.replace('.', '').str.replace(',', '.').astype(float)
         df_CTe['Valor da BC do ICMS'] = df_CTe['Valor da BC do ICMS'].str.replace('.', '').str.replace(',', '.').astype(float)
         df_CTe['Valor do ICMS'] = df_CTe['Valor do ICMS'].str.replace('.', '').str.replace(',', '.').astype(float)
